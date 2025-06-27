@@ -26,14 +26,17 @@ If you find WAFT useful for your work, please consider citing our academic paper
     <a href="http://www.cs.princeton.edu/~jiadeng">Jia Deng</a><br>
 </p>
 
-<!-- ```
-@article{wang2024sea,
-  title={SEA-RAFT: Simple, Efficient, Accurate RAFT for Optical Flow},
-  author={Wang, Yihan and Lipson, Lahav and Deng, Jia},
-  journal={arXiv preprint arXiv:2405.14793},
-  year={2024}
+```
+@misc{wang2025waftwarpingalonefieldtransforms,
+      title={WAFT: Warping-Alone Field Transforms for Optical Flow}, 
+      author={Yihan Wang and Jia Deng},
+      year={2025},
+      eprint={2506.21526},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2506.21526}, 
 }
-``` -->
+```
 
 ## Requirements
 Our code is developed with pytorch 2.7.0, CUDA 12.8 and python 3.12. 
