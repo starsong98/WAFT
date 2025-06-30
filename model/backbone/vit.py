@@ -35,13 +35,12 @@ class VisionTransformer(nn.Module):
         self.input_dim = input_dim
         self.img_size = (224, 224)
         self.patch_size = patch_size
-        self.n_patches = patch_size * patch_size
         self.output_dim = MODEL_CONFIGS[model_name]['features']
-        self.pos_embed = nn.Parameter(torch.zeros(1, self.n_patches, self.embed_dim))
+        self.pos_embed = nn.Parameter(torch.zeros(1, 256, self.embed_dim))
         self.patch_embed = PatchEmbed(img_size=self.img_size, patch_size=self.patch_size, in_chans=input_dim, embed_dim=self.embed_dim)
         self.dpt_head = DPTHead(self.embed_dim, MODEL_CONFIGS[model_name]['features'], out_channels=MODEL_CONFIGS[model_name]['out_channels'])
 
-    def interpolate_pos_encoding(self, x, w, h):
+    def interpolate_pos_encoding(self, x, h, w):
         previous_dtype = x.dtype
         npatch = x.shape[1]
         N = self.pos_embed.shape[1]
@@ -55,12 +54,12 @@ class VisionTransformer(nn.Module):
         sx, sy = float(w0) / sqrt_N, float(h0) / sqrt_N
         pos_embed = nn.functional.interpolate(
             pos_embed.reshape(1, int(sqrt_N), int(sqrt_N), dim).permute(0, 3, 1, 2),
-            scale_factor=(sx, sy),
+            scale_factor=(sy, sx),
             mode="bicubic",
             antialias=False
         )
-        assert int(w0) == pos_embed.shape[-2]
-        assert int(h0) == pos_embed.shape[-1]
+        assert int(w0) == pos_embed.shape[-1]
+        assert int(h0) == pos_embed.shape[-2]
         pos_embed = pos_embed.permute(0, 2, 3, 1).view(1, -1, dim)
         return pos_embed.to(previous_dtype)
 
