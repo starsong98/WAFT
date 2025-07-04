@@ -36,7 +36,7 @@ class VisionTransformer(nn.Module):
         self.img_size = (224, 224)
         self.patch_size = patch_size
         self.output_dim = MODEL_CONFIGS[model_name]['features']
-        self.pos_embed = nn.Parameter(torch.zeros(1, 256, self.embed_dim))
+        self.pos_embed = nn.Parameter(torch.zeros(1, 64, self.embed_dim))
         self.patch_embed = PatchEmbed(img_size=self.img_size, patch_size=self.patch_size, in_chans=input_dim, embed_dim=self.embed_dim)
         self.dpt_head = DPTHead(self.embed_dim, MODEL_CONFIGS[model_name]['features'], out_channels=MODEL_CONFIGS[model_name]['out_channels'])
 
